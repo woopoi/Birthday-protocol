@@ -117,13 +117,21 @@ hintBtn.addEventListener("click", () => {
 
       const value = (input.value || "").trim().toLowerCase();
 
-      if (value === "help") {
-        show(`
-          <p class="line">&gt; available commands:</p>
-          <p class="line">&gt; help</p>
-          <p class="line">&gt; whoami</p>
-          <p class="line">&gt; unlock --version 31.0</p>
-        `);
+    if (value === "help") {
+  show(`
+    <p class="line">&gt; available commands:</p>
+    <p class="line">&gt; help</p>
+    <p class="line">&gt; whoami</p>
+    <p class="line">&gt; hint</p>
+  `);
+}
+
+else if (value === "hint") {
+  show(`
+    <p class="line">&gt; use the button: "Klicka här för ledtråd"</p>
+  `);
+}
+
       } else if (value === "whoami") {
         show(`
           <p class="line">&gt; user: my_favorite_person</p>
