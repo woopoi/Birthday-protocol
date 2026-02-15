@@ -56,7 +56,8 @@ input.addEventListener("keydown", function(e) {
   if (e.key === "Enter") {
     const value = input.value.trim().toLowerCase();
 
-    if (value === "unlock 31.0") {
+if (value === "unlock --version 31.0") {
+
       response.classList.remove("hidden");
       response.innerHTML = `
         <p>> access granted</p>
