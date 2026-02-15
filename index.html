@@ -57,19 +57,23 @@ input.addEventListener("keydown", function(e) {
     const value = input.value.trim().toLowerCase();
 
 if (value === "unlock --version 31.0") {
-
-      response.classList.remove("hidden");
-      response.innerHTML = `
-        <p>> access granted</p>
-        <p>> loading next checkpoint...</p>
-        <br>
-        <p>🎯 Next clue:</p>
-        <p><strong>Gå till köket och kolla bakom kaffet.</strong></p>
-      `;
-    } else {
-      response.classList.remove("hidden");
-      response.innerHTML = `<p>> command not recognized</p>`;
-    }
+  response.classList.remove("hidden");
+  response.innerHTML = `
+    <p>> access granted</p>
+    <p>> loading next checkpoint...</p>
+    <br>
+    <p>🎯 Next clue:</p>
+    <p><strong>Gå till köket och kolla bakom kaffet.</strong></p>
+  `;
+}
+else if (value === "unlock") {
+  response.classList.remove("hidden");
+  response.innerHTML = `<p>> error: missing --version flag</p>`;
+}
+else {
+  response.classList.remove("hidden");
+  response.innerHTML = `<p>> command not recognized</p>`;
+}
 
     input.value = "";
   }
