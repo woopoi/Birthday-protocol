@@ -50,8 +50,22 @@
 
     .hidden { display: none; }
 
-    /* För att det ska kännas som “terminalrader” */
     .line { margin: 0; }
+
+    #hintBtn{
+  margin-top: 14px;
+  background: transparent;
+  color: rgba(0,255,0,0.7);
+  border: 1px solid rgba(0,255,0,0.35);
+  padding: 8px 12px;
+  font: inherit;
+  cursor: pointer;
+}
+#hintBtn:hover{
+  color: lime;
+  border-color: rgba(0,255,0,0.7);
+}
+
   </style>
 </head>
 
@@ -68,6 +82,7 @@
       <span class="prompt">&gt;</span>
       <input id="command" autocomplete="off" autofocus placeholder="type help" />
     </div>
+    <button id="hintBtn" type="button">Klicka här för ledtråd</button>
 
     <div id="response" class="hidden"></div>
   </div>
@@ -75,6 +90,19 @@
   <script>
     const input = document.getElementById("command");
     const response = document.getElementById("response");
+const hintBtn = document.getElementById("hintBtn");
+let hintLevel = 0;
+
+hintBtn.addEventListener("click", () => {
+  hintLevel++;
+
+  if (hintLevel === 1) {
+    show(`<p class="line">&gt; hint: use the --version flag</p>`);
+  } else if (hintLevel === 2) {
+    show(`<p class="line">&gt; hint: unlock the version</p>`);
+
+  input.focus();
+});
 
     // Klick var som helst för att fokusera input (så det alltid går att skriva)
     document.addEventListener("click", () => input.focus());
