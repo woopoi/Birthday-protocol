@@ -5,34 +5,43 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Birthday Protocol v3.1</title>
 
-  <style>
-    body {
-      background: black;
-      color: lime;
-      font-family: monospace;
-      padding: 30px;
-    }
-
-    #terminal {
-      max-width: 800px;
-    }
-
-  input {
+body {
   background: black;
-  border: none;
-  border-bottom: 1px solid rgba(0,255,0,.4);
   color: lime;
   font-family: monospace;
-  font-size: 18px;
+  padding: 30px;
+}
+
+#terminal {
+  max-width: 800px;
+}
+
+#prompt {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+input {
+  background: transparent;
+  border: none;
+  border-bottom: 1px solid rgba(0, 255, 0, 0.4);
+  color: lime;
+  font-family: monospace;
+  font-size: 22px;
   outline: none;
-  width: 420px;
+  width: min(800px, 80vw);
   caret-color: lime;
 }
 
+input::placeholder {
+  color: rgba(0, 255, 0, 0.35);
+}
 
-    .hidden {
-      display: none;
-    }
+.hidden {
+  display: none;
+}
+
   </style>
 </head>
 
