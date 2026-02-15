@@ -87,73 +87,76 @@
     <div id="response" class="hidden"></div>
   </div>
 
-  <script>
-    const input = document.getElementById("command");
-    const response = document.getElementById("response");
-const hintBtn = document.getElementById("hintBtn");
-let hintLevel = 0;
+<script>
+  const input = document.getElementById("command");
+  const response = document.getElementById("response");
+  const hintBtn = document.getElementById("hintBtn");
 
-hintBtn.addEventListener("click", () => {
-  hintLevel++;
+  let hintLevel = 0;
 
-  if (hintLevel === 1) {
-    show(`<p class="line">&gt; hint: use the --version flag</p>`);
-  } else if (hintLevel === 2) {
-    show(`<p class="line">&gt; hint: unlock the version</p>`);
+  function show(html) {
+    response.classList.remove("hidden");
+    response.innerHTML = html;
+  }
 
-  input.focus();
-});
+  // Klick var som helst -> fokus i input, men stör inte knappklick
+  document.addEventListener("click", (e) => {
+    if (e.target && e.target.id === "hintBtn") return;
+    input.focus();
+  });
 
-    // Klick var som helst för att fokusera input (så det alltid går att skriva)
-    document.addEventListener("click", () => input.focus());
+  // Hint-knapp (enda sättet att få ledtråd)
+  hintBtn.addEventListener("click", () => {
+    hintLevel++;
 
-    function show(html) {
-      response.classList.remove("hidden");
-      response.innerHTML = html;
+    if (hintLevel === 1) {
+      show(`<p class="line">&gt; hint: use a flag</p>`);
+    } else if (hintLevel === 2) {
+      show(`<p class="line">&gt; hint: the flag is <strong>--version</strong></p>`);
+    } else if (hintLevel === 3) {
+      show(`<p class="line">&gt; hint: the number is already printed above</p>`);
+    } else {
+      show(`<p class="line">&gt; hint: copy exactly what comes after <strong>version:</strong></p>`);
     }
 
-    input.addEventListener("keydown", (e) => {
-      if (e.key !== "Enter") return;
+    input.focus();
+  });
 
-      const value = (input.value || "").trim().toLowerCase();
+  input.addEventListener("keydown", (e) => {
+    if (e.key !== "Enter") return;
+
+    const value = (input.value || "").trim().toLowerCase();
 
     if (value === "help") {
-  show(`
-    <p class="line">&gt; available commands:</p>
-    <p class="line">&gt; help</p>
-    <p class="line">&gt; whoami</p>
-    <p class="line">&gt; hint</p>
-  `);
-}
+      show(`
+        <p class="line">&gt; available commands:</p>
+        <p class="line">&gt; help</p>
+        <p class="line">&gt; whoami</p>
+        <p class="line">&gt; hint</p>
+      `);
+    } else if (value === "hint") {
+      show(`<p class="line">&gt; use the button: "Klicka här för ledtråd"</p>`);
+    } else if (value === "whoami") {
+      show(`
+        <p class="line">&gt; user: my_favorite_person</p>
+        <p class="line">&gt; role: bajskorv</p>
+        <p class="line">&gt; status: forever loved</p>
+      `);
+    } else if (value === "unlock --version 31.0") {
+      show(`
+        <p class="line">&gt; access granted</p>
+        <p class="line">&gt; loading next checkpoint...</p>
+        <br />
+        <p class="line">🎯 Next clue:</p>
+        <p class="line"><strong>Gå till köket och kolla bakom kaffet.</strong></p>
+      `);
+    } else {
+      // Gör "unlock" hemligt: inget extra hjälpmeddelande
+      show(`<p class="line">&gt; command not recognized</p>`);
+    }
 
-else if (value === "hint") {
-  show(`
-    <p class="line">&gt; use the button: "Klicka här för ledtråd"</p>
-  `);
-}
-
-      } else if (value === "whoami") {
-        show(`
-          <p class="line">&gt; user: my_favorite_person</p>
-          <p class="line">&gt; role: bajskorv</p>
-          <p class="line">&gt; status: forever loved</p>
-        `);
-      } else if (value === "unlock") {
-        show(`<p class="line">&gt; error: missing --version flag</p>`);
-      } else if (value === "unlock --version 31.0") {
-        show(`
-          <p class="line">&gt; access granted</p>
-          <p class="line">&gt; loading next checkpoint...</p>
-          <br />
-          <p class="line">🎯 Next clue:</p>
-          <p class="line"><strong>Gå till köket och kolla bakom kaffet.</strong></p>
-        `);
-      } else {
-        show(`<p class="line">&gt; command not recognized</p>`);
-      }
-
-      input.value = "";
-    });
-  </script>
+    input.value = "";
+  });
+</script>
 </body>
 </html>
