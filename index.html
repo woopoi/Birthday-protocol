@@ -1,77 +1,69 @@
-<!doctype html>
+<!DOCTYPE html>
 <html lang="sv">
 <head>
-  <meta charset="utf-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>Birthday Protocol // v31</title>
-  <style>
-    body { font-family: system-ui, -apple-system, Segoe UI, Roboto, sans-serif; margin: 0; padding: 32px; max-width: 820px; }
-    .card { border: 1px solid #ddd; border-radius: 14px; padding: 22px; }
-    code, pre { background: #f6f6f6; padding: 2px 6px; border-radius: 8px; }
-    .hint { opacity: .85; font-size: .95rem; margin-top: 10px; }
-    input { padding: 10px 12px; border-radius: 10px; border: 1px solid #ccc; width: min(360px, 100%); }
-    button { padding: 10px 14px; border-radius: 10px; border: 1px solid #333; background: #111; color: #fff; cursor: pointer; }
-    .row { display: flex; gap: 10px; align-items: center; flex-wrap: wrap; margin-top: 14px; }
-    .ok { margin-top: 14px; padding: 12px; border-radius: 12px; background: #e9fff0; border: 1px solid #b7f3c7; display: none; }
-    .bad { margin-top: 14px; padding: 12px; border-radius: 12px; background: #fff0f0; border: 1px solid #f3b7b7; display: none; }
-  </style>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Birthday Protocol v3.1</title>
+
+<style>
+body {
+  background: black;
+  color: lime;
+  font-family: monospace;
+  padding: 30px;
+}
+
+#terminal {
+  max-width: 800px;
+}
+
+input {
+  background: black;
+  border: none;
+  color: lime;
+  font-family: monospace;
+  font-size: 16px;
+  outline: none;
+  width: 80%;
+}
+
+.hidden {
+  display: none;
+}
+</style>
 </head>
+
 <body>
-  <h1>Birthday Protocol</h1>
-  <div class="card">
-    <p><strong>Incident:</strong> En ny kampanj är på väg live. Men accessnyckeln är gömd i “det mest självklara stället” för någon som jobbar med web & marketing.</p>
 
-    <p><strong>Uppdrag:</strong> Hitta nyckeln och lås upp nästa steg.</p>
+<div id="terminal">
+  <p>> initializing birthday_protocol.exe</p>
+  <p>> connection established: 6 years</p>
+  <p>> version: 31.0</p>
+  <p>> access restricted</p>
+  <br>
+  <p>> enter command:</p>
+  <span>> </span><input id="command" autocomplete="off" autofocus>
+  
+  <div id="response" class="hidden"></div>
+</div>
 
-    <p class="hint">Hint: “Alla ser sidan. Men inte alla tittar bakom den.”</p>
-    <p class="hint">Bonus-hint: Din ålder idag är en del av protokollet.</p>
+<script>
+const input = document.getElementById("command");
+const response = document.getElementById("response");
 
-    <div class="row">
-      <input id="key" placeholder="Skriv in accessnyckeln…" autocomplete="off" />
-      <button id="unlock">Lås upp</button>
-    </div>
+input.addEventListener("keydown", function(e) {
+  if (e.key === "Enter") {
+    const value = input.value.trim().toLowerCase();
 
-    <div class="ok" id="ok">
-      ✅ Access godkänd.<br />
-      Nästa ledtråd: <strong id="next"></strong>
-    </div>
-    <div class="bad" id="bad">
-      ❌ Fel nyckel. Testa igen. (Tänk: webbläsarens verktyg.)
-    </div>
-  </div>
-
-  <!--
-    🧩 NYCKELN FINNS HÄR:
-    Leta efter "31" och "marketing". Kombinera dem med ett bindestreck.
-    Exempel: 12-ord
-  -->
-
-  <script>
-    // Den här "nyckeln" är enkel med flit.
-    // (Gåtan är att hitta den, inte att brute force:a.)
-    const ACCESS_KEY = "31-marketing";
-
-    // Nästa ledtråd kan vara vad du vill:
-    // t.ex. "Kolla i kylskåpet bakom havremjölken"
-    const NEXT_CLUE = "Gå till hallen och titta under skohyllan.";
-
-    const keyEl = document.getElementById("key");
-    const okEl = document.getElementById("ok");
-    const badEl = document.getElementById("bad");
-    const nextEl = document.getElementById("next");
-
-    document.getElementById("unlock").addEventListener("click", () => {
-      const val = (keyEl.value || "").trim().toLowerCase();
-      if (val === ACCESS_KEY) {
-        badEl.style.display = "none";
-        okEl.style.display = "block";
-        nextEl.textContent = NEXT_CLUE;
-      } else {
-        okEl.style.display = "none";
-        badEl.style.display = "block";
-      }
-    });
-  </script>
-</body>
-</html>
-
+    if (value === "unlock 31") {
+      response.classList.remove("hidden");
+      response.innerHTML = `
+        <p>> access granted</p>
+        <p>> loading next checkpoint...</p>
+        <br>
+        <p>🎯 Next clue:</p>
+        <p><strong>Gå till köket och kolla bakom kaffet.</strong></p>
+      `;
+    } else {
+      response.classList.remove("hidden");
+      response.innerHTML = `<p>> command not recognize
