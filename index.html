@@ -17,15 +17,18 @@
       max-width: 800px;
     }
 
-    input {
-      background: black;
-      border: none;
-      color: lime;
-      font-family: monospace;
-      font-size: 16px;
-      outline: none;
-      width: 80%;
-    }
+  input {
+  background: black;
+  border: none;
+  border-bottom: 1px solid rgba(0,255,0,.4);
+  color: lime;
+  font-family: monospace;
+  font-size: 18px;
+  outline: none;
+  width: 420px;
+  caret-color: lime;
+}
+
 
     .hidden {
       display: none;
@@ -42,10 +45,10 @@
     <p>> access restricted</p>
     <br />
     <p>> enter command:</p>
-    <span>> </span><input id="command" autocomplete="off" autofocus />
+  <div>
+  <span>> </span><input id="command" autocomplete="off" autofocus placeholder="type help" />
+</div>
 
-    <div id="response" class="hidden"></div>
-  </div>
 
   <script>
     const input = document.getElementById("command");
@@ -55,14 +58,16 @@
       if (e.key === "Enter") {
         const value = input.value.trim().toLowerCase();
 
-        if (value === "help") {
-          response.classList.remove("hidden");
-          response.innerHTML = `
-            <p>> available commands:</p>
-            <p>> help</p>
-            <p>> whoami</p>
-            <p>> unlock --version [number]</p>
-          `;
+if (value === "help") {
+  response.classList.remove("hidden");
+  response.innerHTML = `
+    <p>> available commands:</p>
+    <p>> help</p>
+    <p>> whoami</p>
+    <p>> unlock --version 31.0</p>
+  `;
+}
+
         } else if (value === "whoami") {
           response.classList.remove("hidden");
           response.innerHTML = `
