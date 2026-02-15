@@ -1,84 +1,97 @@
 <!DOCTYPE html>
 <html lang="sv">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Birthday Protocol v3.1</title>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Birthday Protocol v3.1</title>
 
-<style>
-body {
-  background: black;
-  color: lime;
-  font-family: monospace;
-  padding: 30px;
-}
+  <style>
+    body {
+      background: black;
+      color: lime;
+      font-family: monospace;
+      padding: 30px;
+    }
 
-#terminal {
-  max-width: 800px;
-}
+    #terminal {
+      max-width: 800px;
+    }
 
-input {
-  background: black;
-  border: none;
-  color: lime;
-  font-family: monospace;
-  font-size: 16px;
-  outline: none;
-  width: 80%;
-}
+    input {
+      background: black;
+      border: none;
+      color: lime;
+      font-family: monospace;
+      font-size: 16px;
+      outline: none;
+      width: 80%;
+    }
 
-.hidden {
-  display: none;
-}
-</style>
+    .hidden {
+      display: none;
+    }
+  </style>
 </head>
 
 <body>
+  <div id="terminal">
+    <p>> initializing birthday_protocol.exe</p>
+    <p>> first contact: 2022</p>
+    <p>> connection uptime: 4 years</p>
+    <p>> version: 31.0</p>
+    <p>> access restricted</p>
+    <br />
+    <p>> enter command:</p>
+    <span>> </span><input id="command" autocomplete="off" autofocus />
 
-<div id="terminal">
-  <p>> initializing birthday_protocol.exe</p>
- <p>> first handshake: 2022</p>
-<p>> connection status: still strong</p>
-  <p>> version: 31.0</p>
-  <p>> access restricted</p>
-  <br>
-  <p>> enter command:</p>
-  <span>> </span><input id="command" autocomplete="off" autofocus>
-  
-  <div id="response" class="hidden"></div>
-</div>
+    <div id="response" class="hidden"></div>
+  </div>
 
-<script>
-const input = document.getElementById("command");
-const response = document.getElementById("response");
+  <script>
+    const input = document.getElementById("command");
+    const response = document.getElementById("response");
 
-input.addEventListener("keydown", function(e) {
-  if (e.key === "Enter") {
-    const value = input.value.trim().toLowerCase();
+    input.addEventListener("keydown", function (e) {
+      if (e.key === "Enter") {
+        const value = input.value.trim().toLowerCase();
 
-if (value === "unlock --version 31.0") {
-  response.classList.remove("hidden");
-  response.innerHTML = `
-    <p>> access granted</p>
-    <p>> loading next checkpoint...</p>
-    <br>
-    <p>🎯 Next clue:</p>
-    <p><strong>Gå till köket och kolla bakom kaffet.</strong></p>
-  `;
-}
-else if (value === "unlock") {
-  response.classList.remove("hidden");
-  response.innerHTML = `<p>> error: missing --version flag</p>`;
-}
-else {
-  response.classList.remove("hidden");
-  response.innerHTML = `<p>> command not recognized</p>`;
-}
+        if (value === "help") {
+          response.classList.remove("hidden");
+          response.innerHTML = `
+            <p>> available commands:</p>
+            <p>> help</p>
+            <p>> whoami</p>
+            <p>> unlock --version [number]</p>
+          `;
+        } else if (value === "whoami") {
+          response.classList.remove("hidden");
+          response.innerHTML = `
+            <p>> user: birthday_admin</p>
+            <p>> role: senior web wizard</p>
+            <p>> status: loved since 2022</p>
+          `;
+        } else if (value === "unlock --version 31.0") {
+          response.classList.remove("hidden");
+          response.innerHTML = `
+            <p>> access granted</p>
+            <p>> loading next checkpoint...</p>
+            <br />
+            <p>🎯 Next clue:</p>
+            <p><strong>Gå till köket och kolla bakom kaffet.</strong></p>
+          `;
+        } else if (value === "unlock") {
+          response.classList.remove("hidden");
+          response.innerHTML = `<p>> error: missing --version flag</p>`;
+        } else {
+          response.classList.remove("hidden");
+          response.innerHTML = `<p>> command not recognized</p>`;
+        }
 
-    input.value = "";
-  }
-});
-</script>
-
+        input.value = "";
+      }
+    });
+  </script>
 </body>
+</html>
+
 </html>
