@@ -1,119 +1,124 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="sv">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Birthday Protocol v3.1</title>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Birthday Protocol v31</title>
 
-body {
-  background: black;
-  color: lime;
-  font-family: monospace;
-  padding: 30px;
-}
+  <style>
+    body {
+      background: black;
+      color: lime;
+      font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;
+      padding: 30px;
+      margin: 0;
+    }
 
-#terminal {
-  max-width: 800px;
-}
+    #terminal {
+      max-width: 900px;
+      line-height: 1.6;
+      font-size: 22px;
+      white-space: pre-wrap;
+    }
 
-#prompt {
-  display: flex;
-  align-items: center;
-  gap: 10px;
-}
+    #prompt {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      margin-top: 8px;
+    }
 
-input {
-  background: transparent;
-  border: none;
-  border-bottom: 1px solid rgba(0, 255, 0, 0.4);
-  color: lime;
-  font-family: monospace;
-  font-size: 22px;
-  outline: none;
-  width: min(800px, 80vw);
-  caret-color: lime;
-}
+    .prompt {
+      user-select: none;
+    }
 
-input::placeholder {
-  color: rgba(0, 255, 0, 0.35);
-}
+    input {
+      background: transparent;
+      border: none;
+      border-bottom: 1px solid rgba(0, 255, 0, 0.4);
+      color: lime;
+      font: inherit;
+      outline: none;
+      width: min(820px, 80vw);
+      caret-color: lime;
+      padding: 4px 2px;
+    }
 
-.hidden {
-  display: none;
-}
+    input::placeholder {
+      color: rgba(0, 255, 0, 0.35);
+    }
 
+    .hidden { display: none; }
+
+    /* För att det ska kännas som “terminalrader” */
+    .line { margin: 0; }
   </style>
 </head>
 
 <body>
   <div id="terminal">
-    <p>> initializing birthday_protocol.exe</p>
-    <p>> first contact: 2022</p>
-    <p>> connection uptime: 4 years</p>
-    <p>> version: 31.0</p>
-    <p>> access restricted</p>
+    <p class="line">&gt; initializing birthday_protocol.exe</p>
+    <p class="line">&gt; first contact: 2022</p>
+    <p class="line">&gt; connection uptime: 4 years</p>
+    <p class="line">&gt; version: 31.0</p>
+    <p class="line">&gt; access restricted</p>
     <br />
-    <p>> enter command:</p>
+    <p class="line">&gt; enter command:</p>
 
     <div id="prompt">
-      <span>> </span>
+      <span class="prompt">&gt;</span>
       <input id="command" autocomplete="off" autofocus placeholder="type help" />
     </div>
 
     <div id="response" class="hidden"></div>
   </div>
-</body>
-
-
 
   <script>
     const input = document.getElementById("command");
     const response = document.getElementById("response");
 
-    input.addEventListener("keydown", function (e) {
-      if (e.key === "Enter") {
-        const value = input.value.trim().toLowerCase();
+    // Klick var som helst för att fokusera input (så det alltid går att skriva)
+    document.addEventListener("click", () => input.focus());
 
-if (value === "help") {
-  response.classList.remove("hidden");
-  response.innerHTML = `
-    <p>> available commands:</p>
-    <p>> help</p>
-    <p>> whoami</p>
-    <p>> unlock --version 31.0</p>
-  `;
-}
+    function show(html) {
+      response.classList.remove("hidden");
+      response.innerHTML = html;
+    }
 
-        } else if (value === "whoami") {
-          response.classList.remove("hidden");
-          response.innerHTML = `
-            <p>> user: my_favorite_person</p>
-            <p>> role: bajskorv</p>
-            <p>> status: forever loved</p>
-            <p>> privileges: full access to my heart
-          `;
-        } else if (value === "unlock --version 31.0") {
-          response.classList.remove("hidden");
-          response.innerHTML = `
-            <p>> access granted</p>
-            <p>> loading next checkpoint...</p>
-            <br />
-            <p>🎯 Next clue:</p>
-            <p><strong>Gå till köket och kolla bakom kaffet.</strong></p>
-          `;
-        } else if (value === "unlock") {
-          response.classList.remove("hidden");
-          response.innerHTML = `<p>> error: missing --version flag</p>`;
-        } else {
-          response.classList.remove("hidden");
-          response.innerHTML = `<p>> command not recognized</p>`;
-        }
+    input.addEventListener("keydown", (e) => {
+      if (e.key !== "Enter") return;
 
-        input.value = "";
+      const value = (input.value || "").trim().toLowerCase();
+
+      if (value === "help") {
+        show(`
+          <p class="line">&gt; available commands:</p>
+          <p class="line">&gt; help</p>
+          <p class="line">&gt; whoami</p>
+          <p class="line">&gt; unlock --version 31.0</p>
+        `);
+      } else if (value === "whoami") {
+        show(`
+          <p class="line">&gt; user: my_favorite_person</p>
+          <p class="line">&gt; role: bajskorv</p>
+          <p class="line">&gt; status: forever loved</p>
+        `);
+      } else if (value === "unlock") {
+        show(`<p class="line">&gt; error: missing --version flag</p>`);
+      } else if (value === "unlock --version 31.0") {
+        show(`
+          <p class="line">&gt; access granted</p>
+          <p class="line">&gt; loading next checkpoint...</p>
+          <br />
+          <p class="line">🎯 Next clue:</p>
+          <p class="line"><strong>Gå till köket och kolla bakom kaffet.</strong></p>
+        `);
+      } else {
+        show(`<p class="line">&gt; command not recognized</p>`);
       }
+
+      input.value = "";
     });
   </script>
 </body>
-</html>
-
 </html>
