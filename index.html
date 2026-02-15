@@ -86,7 +86,6 @@
 
     <div id="response" class="hidden"></div>
   </div>
-
 <script>
   const input = document.getElementById("command");
   const response = document.getElementById("response");
@@ -99,21 +98,19 @@
     response.innerHTML = html;
   }
 
-  // Klick var som helst -> fokus i input, men stör inte knappklick
+  // Klick var som helst -> fokus i input (men inte när man klickar på knappen)
   document.addEventListener("click", (e) => {
     if (e.target && e.target.id === "hintBtn") return;
     input.focus();
   });
 
-  // Hint-knapp (enda sättet att få ledtråd)
+  // Hint-knappen
   hintBtn.addEventListener("click", () => {
     hintLevel++;
 
     if (hintLevel === 1) {
-      show(`<p class="line">&gt; hint: use a flag</p>`);
+      show(`<p class="line">&gt; hint: use the <strong>--version</strong> flag</p>`);
     } else if (hintLevel === 2) {
-      show(`<p class="line">&gt; hint: the flag is <strong>--version</strong></p>`);
-    } else if (hintLevel === 3) {
       show(`<p class="line">&gt; hint: the number is already printed above</p>`);
     } else {
       show(`<p class="line">&gt; hint: copy exactly what comes after <strong>version:</strong></p>`);
@@ -122,6 +119,7 @@
     input.focus();
   });
 
+  // Terminalkommandon
   input.addEventListener("keydown", (e) => {
     if (e.key !== "Enter") return;
 
@@ -151,12 +149,13 @@
         <p class="line"><strong>Gå till köket och kolla bakom kaffet.</strong></p>
       `);
     } else {
-      // Gör "unlock" hemligt: inget extra hjälpmeddelande
+      // Gör "unlock" hemligt: ge ingen extra hjälp
       show(`<p class="line">&gt; command not recognized</p>`);
     }
 
     input.value = "";
   });
 </script>
+
 </body>
 </html>
